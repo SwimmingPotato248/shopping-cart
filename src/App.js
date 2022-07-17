@@ -54,6 +54,19 @@ function App() {
     setInputCount(newCount);
   }
 
+  function handleClick(evt) {
+    const newCart = cart.map(e => {
+      if (e.product.id === parseInt(evt.target.name)) {
+        const count = handleValue(e.product.id);
+        const newCount = e.itemCount + count
+        return { product: e.product, itemCount: newCount }
+      }
+      return e
+    })
+    setCart(newCart)
+    console.log(newCart)
+  }
+
   return (
     <div className="App">
       <div className="products-container">
@@ -74,7 +87,7 @@ function App() {
                 name={e.id}
                 onChange={handleChange}
               ></input>
-              <button>Add to cart</button>
+              <button name={e.id} onClick={handleClick}>Add to cart</button>
             </div>
           );
         })}
