@@ -1,0 +1,9 @@
+.products-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+input {
+  padding: .5rem;
+  margin: .5rem;
+}
