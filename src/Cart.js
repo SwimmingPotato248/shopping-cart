@@ -8,7 +8,8 @@ export default function Cart() {
       .then((res) => res.json())
       .then((json) => setProducts(json));
   }, []);
-  const { cart } = useCart();
+  const { cart, increaseItemQuantity, decreaseItemQuantity, removeFromCart } =
+    useCart();
 
   return (
     <div>
@@ -19,10 +20,36 @@ export default function Cart() {
         }
         return (
           <div className="cart-item-card" key={product.id}>
-            <img src={product.image} alt="product" height="75px"></img>
-            <p>{product.title}</p>
-            <p>x{cartItem.quantity}</p>
-            <p>$ {cartItem.quantity * product.price}</p>
+            <img src={product.image} alt="product" width="75px"></img>
+            <div className="cart-item-card-body">
+              <p>{product.title}</p>
+              <div className="btn-group">
+                <button
+                  onClick={() => {
+                    decreaseItemQuantity(cartItem.id);
+                  }}
+                >
+                  -
+                </button>
+                <p>x{cartItem.quantity}</p>
+                <button
+                  onClick={() => {
+                    increaseItemQuantity(cartItem.id);
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              <p>Item cost: ${cartItem.quantity * product.price}</p>
+            </div>
+            <button
+              className="remove-from-cart-btn"
+              onClick={() => {
+                removeFromCart(cartItem.id);
+              }}
+            >
+              Remove from cart
+            </button>
           </div>
         );
       })}

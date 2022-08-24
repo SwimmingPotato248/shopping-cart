@@ -24,10 +24,9 @@ export default function Shop() {
             <div className="item-card-body">
               <p>{item.title}</p>
               <p>$ {item.price}</p>
-              <Link to={`/shop/${item.id}`}>
-                <button>Details</button>
-              </Link>
+              <Link to={`/shop/${item.id}`}>View more</Link>
               <button
+                className="add-btn"
                 onClick={() => {
                   increaseItemQuantity(item.id);
                 }}
