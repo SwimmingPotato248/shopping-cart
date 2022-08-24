@@ -3,13 +3,42 @@ import { useCart } from "./CartContext";
 
 export default function Cart() {
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
-      .then((json) => setProducts(json));
+      .then((json) => {
+        setProducts(json);
+        setIsLoading(false);
+      });
   }, []);
   const { cart, increaseItemQuantity, decreaseItemQuantity, removeFromCart } =
     useCart();
+  const [isEmpty, setIsEmpty] = useState(true);
+  useEffect(() => {
+    if (cart.length !== 0) {
+      setIsEmpty(false);
+    } else {
+      setIsEmpty(true);
+    }
+  }, [cart]);
+  if (isEmpty) {
+    return <h1>Cart is empty</h1>;
+  }
+
+  function getTotalCost() {
+    let total = 0;
+    cart.forEach((item) => {
+      total +=
+        item.quantity *
+        products.find((product) => product.id === item.id)?.price;
+    });
+    return total.toFixed(2);
+  }
+
+  if (isLoading) {
+    return <h1>Loading</h1>;
+  }
 
   return (
     <div>
@@ -53,6 +82,7 @@ export default function Cart() {
           </div>
         );
       })}
+      <p>Total Cost: ${getTotalCost()}</p>
     </div>
   );
 }

@@ -111,7 +111,8 @@ nav > ul > li > a {
   padding: 20px;
   margin: 10px;
   border: 1px solid black;
-  max-width: 800px;
+  width: 800px;
+  background-color: #f3f3f3;
 }
 
 .btn-group {
